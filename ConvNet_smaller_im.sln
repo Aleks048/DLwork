@@ -1,0 +1,23 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2000
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "ConvNet", "ConvNet\ConvNet.pyproj", "{A38EA3EC-0DD1-411B-82CA-F48EA9FCBE2C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A38EA3EC-0DD1-411B-82CA-F48EA9FCBE2C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A38EA3EC-0DD1-411B-82CA-F48EA9FCBE2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {002ED163-F6FB-4E18-91E5-55E1FBA66DB1}
+	EndGlobalSection
+EndGlobal

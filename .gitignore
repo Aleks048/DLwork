@@ -1,0 +1,15 @@
+*.jpg
+*.npy
+*.json
+*.xlsx
+*.rar
+*.xml
+*.xls
+*.zip
+*.pickle
+complete dataset/
+data/
+grid_data/
+painted_data/
+resizedData/
+tests/
