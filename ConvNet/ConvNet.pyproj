@@ -4,13 +4,14 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>a38ea3ec-0dd1-411b-82ca-f48ea9fcbe2c</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>part1\part1TheMainTrainingScript.py</StartupFile>
+    <StartupFile>part1\mainTrain.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
     <Name>ConvNet</Name>
     <RootNamespace>ConvNet</RootNamespace>
+    <TestFramework>Pytest</TestFramework>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -27,7 +28,7 @@
     <Compile Include="old_stuff%28not_used%29\part1\ConvolutionalNet.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="part1\cvStartter.py">
+    <Compile Include="part1\CONSTANTS_part1.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="part1\DataGenerator.py">
@@ -42,7 +43,13 @@
     <Compile Include="old_stuff%28not_used%29\part1\myFolder.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="part1\MyImage.py">
+    <Compile Include="part1\old_RUBBISH.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="preprocessing\prPart1\CONSTANTS_prPart1.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="preprocessing\prPart1\MyImage.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="old_stuff%28not_used%29\part1\old_stuff.py">
@@ -66,10 +73,10 @@
     <Compile Include="part2\tests_part2.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="part1\preprocessingPaintedCracks.py">
+    <Compile Include="preprocessing\prPart1\preprocessingPaintedCracks.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="part1\part1TheMainTrainingScript.py" />
+    <Compile Include="part1\mainTrain.py" />
     <Compile Include="old_stuff%28not_used%29\part1\ResizeConvNet.py" />
     <Compile Include="old_stuff%28not_used%29\part1\gridImages.py">
       <SubType>Code</SubType>
@@ -83,8 +90,18 @@
     <Compile Include="train_starter_starter.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="utils\logGeneration.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="utils\plotAccAndLoss.py">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="preprocessing\" />
+    <Folder Include="preprocessing\prPart2\" />
+    <Folder Include="preprocessing\prPart1\" />
+    <Folder Include="utils\" />
     <Folder Include="part1\" />
     <Folder Include="old_stuff%28not_used%29\" />
     <Folder Include="old_stuff%28not_used%29\part2\" />

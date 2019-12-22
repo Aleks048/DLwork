@@ -1,84 +1,7 @@
+
+
+#here lies an old train function. All respects to it
 '''
-here the training for part 1 is happening
-'''
-
-
-from __future__ import print_function
-import keras
-from keras.backend.tensorflow_backend import set_session
-
-import tensorflow
-
-from keras.datasets import mnist
-from keras.layers import Dense, Flatten
-from keras.layers import Conv2D, MaxPooling2D
-from keras.models import Sequential
-import matplotlib.pylab as plt
-
-#from PIL import Image
-
-#import xlrd
-
-#import os
-import numpy
-import math
-
-import tensorflow as tf
-
-import gc
-import os
-import time
-
-
-from random import shuffle
-
-
-import sys
-
-
-import CONSTANTS as CONST
-from MyImage import MyImage
-
-from DataGenerator import DataGenerator
-import part1networks
-from keras.applications import VGG19
-
-
-import json
-'''
-#def flattenList(list):
-#    out = []
-#    for l in list:
-#        for e in l:
-#            out.append(e)
-#    return out
-'''
-
-def reset_keras():
-    from keras.backend.tensorflow_backend import set_session
-    from keras.backend.tensorflow_backend import clear_session
-    from keras.backend.tensorflow_backend import get_session
-    import tensorflow
-
-    sess = get_session()
-    clear_session()
-    sess.close()
-    sess = get_session()
-
-    #try:
-    #    del classifier # this is from global space - change this as you need
-    #except:
-    #    pass
-
-    print(gc.collect()) # if it's done something you should see a number being outputted
-
-    # use the same config as you used to create the session
-    config = tensorflow.ConfigProto()
-    config.gpu_options.per_process_gpu_memory_fraction = 1
-    config.gpu_options.visible_device_list = "0"
-    set_session(tensorflow.Session(config=config))
-
-
 def train(numOfEpochs,pathToWeights,loadedData,dataSplittedByColor,trainColorNum):
     #param param param
     img_x,img_y = 30, 30
@@ -405,134 +328,27 @@ def train(numOfEpochs,pathToWeights,loadedData,dataSplittedByColor,trainColorNum
     del history
     reset_keras()    
     
-
-def trainTheModelPart1(trData,trLabels,testData,testLabels,cv,model):
-    '''
-    the network or networks for part 1 are trained here 
-    '''
-    import sys
-    sys.path.insert(0, './part2')
-    from part2networks import plotAccAndLoss
-
-    from test_part1 import findHowManyImagesInEachClass
-
-    if CONST.part1Debuging:
-        findHowManyImagesInEachClass(trData)
-        findHowManyImagesInEachClass(testData)
-
-    alpha = 1.3/pow(5,7)#6
-    beta_1 = 0.9
-    beta_2 = 0.99
-    decay = (1/100)*alpha
-    epsilon = 10e-8
-    amsGrad = True
-    modelKernelInitializer="he_uniform"
-
-    drop1 =0.8
-    drop2 = 0.8
-    regRate1=0.1
-    regRate2=0.1
+'''
 
 
-    #creating array of weights
-    trWeights = [CONST.part1weightDict[trLabels[i]] for i in trLabels]
-    #testWeights = [CONST.part1weightDict[testLabels[i]] for i in testLabels]
+#here lies an old attempt to reset keras. We wish it all the best 
+'''
+def reset_keras():
+    from keras.backend.tensorflow_backend import set_session
+    from keras.backend.tensorflow_backend import clear_session
+    from keras.backend.tensorflow_backend import get_session
+    import tensorflow
 
-    optimizer=keras.optimizers.Adam(lr=alpha,beta_1=beta_1,beta_2=beta_2,decay=decay,epsilon = epsilon,amsgrad=amsGrad)
-    loss = keras.losses.categorical_crossentropy
+    sess = get_session()
+    clear_session()
+    sess.close()
+    sess = get_session()
 
-    if CONST.part1usePretrainedNetwork:
-        params = {'dim': (512,0),
-                 'batch_size': 30,
-                 'n_classes':CONST.numClasses,
-                 'n_channels': 0,
-                 'shuffle': True,
-                 'useConv': False
-                 }
-        inShape = (512)
-    else:
-         params = {'dim': (CONST.part1StrideX,CONST.part1StrideY),
-                 'batch_size': 100,
-                 'n_classes':CONST.numClasses,
-                 'n_channels': CONST.part1NumChannels,
-                 'shuffle': True,
-                 'useConv': True
-                 }
-         inShape = (CONST.part1StrideX,CONST.part1StrideY,CONST.part1NumChannels)
-    training_generator = DataGenerator(trData, trLabels, **params)
-    test_generator = DataGenerator(testData, testLabels, **params)
+    print(gc.collect()) # if it's done something you should see a number being outputted
 
-    if os.path.exists(CONST.part1trainedModelSavePath):
-        model = keras.models.load_model(CONST.part1trainedModelSavePath)
-    else:
-        model  = part1networks.leNetExp(input_shape=inShape,num_classes=CONST.numClasses)
-    #model = part1networks.alexExperimentNetModelDeeper((30,30,3),CONST.numClasses,drop1,drop2,regRate1,regRate2,modelKernelInitializer)
-
-    model.compile(loss=loss,
-                    optimizer = optimizer
-                    ,metrics=['accuracy'])
-
-    history = model.fit_generator(generator=training_generator,
-                                    validation_data=test_generator,
-                                    
-                                    epochs=3000,
-                                    use_multiprocessing=False,
-                                    workers=1,
-                                    max_queue_size=1,
-                                    verbose=1,
-                                    class_weight=trWeights
-                                    #callbacks=[keras.callbacks.EarlyStopping(monitor= 'val_acc',patience=3,mode = "max",baseline=80)]
-                                    )    
-    
-    model.save(CONST.part1trainedModelSavePath)
-    
-    plotAccAndLoss(history,cv)
-    del(history)
-    model.reset_states()
-    del(model)
-    tf.reset_default_graph()
-    keras.backend.clear_session()
-    #reset_keras()
-
-
-if __name__ == "__main__":
-
-    if not CONST.useCrossValidation:
-        if not(os.path.exists(CONST.part1ArraysOFDataNamesAndLabelsPath+"\\"+"trDataNames.npy") and 
-               os.path.exists(CONST.part1ArraysOFDataNamesAndLabelsPath+"\\"+"trLabels.json") and
-               os.path.exists(CONST.part1ArraysOFDataNamesAndLabelsPath+"\\"+"testDataNames.npy") and
-               os.path.exists(CONST.part1ArraysOFDataNamesAndLabelsPath+"\\"+"testLabels.json")):
-            from preprocessingPaintedCracks import saveDataNamesAndSplitTrTestFunctor
-            saveDataNamesAndSplitTrTestFunctor().saveDataNamesAndSplitTrTest(CONST.listOfColorsUsed,CONST.folderNames,CONST.augTypes,CONST.part1ArraysOFDataNamesAndLabelsPath,0)
-    
-    
-        trData = numpy.load(CONST.part1ArraysOFDataNamesAndLabelsPath+"\\"+"trDataNames.npy") 
-        with open(CONST.part1ArraysOFDataNamesAndLabelsPath+"\\"+"trLabels.json") as f:
-            trLabels = json.load(f)
-        testData = numpy.load(CONST.part1ArraysOFDataNamesAndLabelsPath+"\\"+"testDataNames.npy") 
-        with open(CONST.part1ArraysOFDataNamesAndLabelsPath+"\\"+"testLabels.json") as f:
-            testLabels = json.load(f)
-        trainTheModelPart1(trData,trLabels,testData,testLabels,0,"model")
-
-    else:
-        from preprocessingPaintedCracks import saveDataNamesAndSplitTrTestFunctor
-
-       
-
-        for cv  in range(CONST.numKFolds):
-            saveData = saveDataNamesAndSplitTrTestFunctor()
-            model = part1networks.leNetExp((30,30,3),CONST.numClasses)
-
-            saveData.saveDataNamesAndSplitTrTest(CONST.listOfColorsUsed,CONST.folderNames,CONST.augTypes,CONST.part1ArraysOFDataNamesAndLabelsPath,float(cv))
-
-            trData = numpy.load(CONST.part1ArraysOFDataNamesAndLabelsPath+"\\"+"trDataNames.npy") 
-            with open(CONST.part1ArraysOFDataNamesAndLabelsPath+"\\"+"trLabels.json") as f:
-                trLabels = json.load(f)
-            testData = numpy.load(CONST.part1ArraysOFDataNamesAndLabelsPath+"\\"+"testDataNames.npy") 
-            with open(CONST.part1ArraysOFDataNamesAndLabelsPath+"\\"+"testLabels.json") as f:
-                testLabels = json.load(f)
-            trainTheModelPart1(trData,trLabels,testData,testLabels,float(cv),"model")
-#train(5000,r"S:\convnet_smaller_images\ConvNet\painted_data\\"+str(sys.argv[1])+".h5",imgList,[countNoCracks,countYellowCracks,countRedCracks,countBlueCracks,countGreenCracks],int(sys.argv[2])+1)
-
-
-
+    # use the same config as you used to create the session
+    config = tensorflow.ConfigProto()
+    config.gpu_options.per_process_gpu_memory_fraction = 1
+    config.gpu_options.visible_device_list = "0"
+    set_session(tensorflow.Session(config=config))
+'''

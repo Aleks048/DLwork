@@ -102,6 +102,10 @@ def saveAugmentedImages(name:str,pathToOrigImg:str,savePath:str):
     numpy.save(savePath+r"\270ref"+"\\"+name+"_270ref.npy",reflection270)
 
 def CreateImagesWithoutCracks(pathPaint:str,pathNoPaint:str,numOfImagesToObtain:int,savePath:str,imgName:str):
+    '''
+    creates images cuts of pictures without cracks
+    '''
+    
     imgFull = Image.open(pathPaint,mode="r").convert("RGB")
     imgResized = imgFull.resize((CONST.rescaleImageX,CONST.rescaleImageY))
     arrayPaint = numpy.asarray(imgResized)
@@ -531,7 +535,7 @@ class saveDataNamesAndSplitTrTestFunctor:
         else:
             #when we use cross-validation
 
-            folder = r"S:\convnet_smaller_images\ConvNet\complete dataset\colored_images_and_np_arrays_from_them\dataNamesAndLabelsArrays\shuffled_separated_data_for_cv"
+            folder = r"here lies a path to CV data"
 
             if cv==0:
                 self.yellow,self.red,self.blue,self.green,self.no = getMyImagesList(listOfColorsUsed,folderNames,CONST.pathToColoredImagesRootFolder,augTypes)

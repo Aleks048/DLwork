@@ -206,7 +206,7 @@ def leNetExp(input_shape,num_classes):
          model.add(keras.layers.Dense(64,activation="relu"))
          model.add(keras.layers.Dense(64,activation="relu"))
      else:
-         model.add(keras.layers.Dense(512,activation="relu",input_dim = input_shape))
+         model.add(keras.layers.Dense(512,activation="relu",input_dim = input_shape[0]))
      model.add(keras.layers.Dense(32,activation="relu"))
      model.add(keras.layers.Dropout(0.5))
      model.add(keras.layers.Dense(num_classes,activation="softmax"))

@@ -18,25 +18,6 @@ def to3Classes(labels):
     print(len([i for i in labels if i>4.5]))
     return asarray([0 if i<1.5 else (1 if (i>1.5) and (i<4.5) else 2) for i in labels])
 #plot
-def plotAccAndLoss(history,lr):
-
-    plt.plot(history.history['acc'])
-    plt.plot(history.history['val_acc'])
-    plt.title('Model accuracy')
-    plt.ylabel('Accuracy')
-    plt.xlabel('Epoch')
-    plt.legend(['Train', 'Test'], loc='upper left')
-    plt.savefig(CONST.part2pathAccSave+str(lr)+".jpg")
-    plt.close()
-    # Plot training & validation loss values
-    plt.plot(history.history['loss'])
-    plt.plot(history.history['val_loss'])
-    plt.title('Model loss')
-    plt.ylabel('Loss')
-    plt.xlabel('Epoch')
-    plt.legend(['Train', 'Test'], loc='upper left')
-    plt.savefig(CONST.part2pathLossSave+str(lr)+".jpg")
-    plt.close()
 
 #models
 def findingModelWithAutokeras(DataX,LabelsY,testData,testLabels,categorizeLabels,lr):

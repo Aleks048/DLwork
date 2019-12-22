@@ -167,4 +167,8 @@ def creatingPredictedDataset():
 
 
 if __name__ =="__main__":
+    import os
+    print(os.getcwd())
     creatingPredictedDataset()
+else:
+    print(__name__)

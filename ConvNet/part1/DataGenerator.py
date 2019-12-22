@@ -17,10 +17,8 @@ class DataGenerator(keras.utils.Sequence):
         self.useConv = useConv
         self.on_epoch_end()
     
-    
-
     def on_epoch_end(self):
-        print(len(self.list_IDs))
+        #print(len(self.list_IDs))
         self.indexes = numpy.arange(len(self.list_IDs))
         if self.shuffle == True:
             numpy.random.shuffle(self.indexes)  
